@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'cubits/cart/cart_cubit.dart';
 import 'cubits/login/login_cubit.dart';
 import 'cubits/register/register_cubit.dart';
 import 'cubits/reset_password/reset_password_cubit.dart';
@@ -33,13 +33,14 @@ void main() async {
 
       child: MultiBlocProvider(
         providers: [
-          // BlocProvider(create: (context) => LoginCubit(loginService: LoginService(dio: Dio()))),
-          // BlocProvider(create: (context) => RegisterCubit(RegisterService(dio: Dio()))),
+          BlocProvider(create: (context) => LoginCubit(loginService: LoginService(dio: Dio()))),
+          BlocProvider(create: (context) => RegisterCubit(RegisterService(dio: Dio()))),
           BlocProvider(create: (context) => CategoryCubit()),
           BlocProvider(create: (context) => ProductsCubit()),
-          // BlocProvider<ResetPasswordCubit>(
-          //   create: (context) => ResetPasswordCubit(),
-          // ),
+          BlocProvider(create: (_) => CartCubit()),
+          BlocProvider<ResetPasswordCubit>(
+           create: (context) => ResetPasswordCubit(),
+           ),
         ],
         child: const MyApp(),
       ),
@@ -62,15 +63,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: SplashScreen.routeName,
       routes: {
-        // LoginScreen.routeName:
-        //     (context) => BlocProvider(
-        //       create: (_) => LoginCubit(loginService: LoginService(dio: Dio())),
-        //       child: const LoginScreen(),
-        //     ),
+        LoginScreen.routeName:
+            (context) => BlocProvider(
+              create: (_) => LoginCubit(loginService: LoginService(dio: Dio())),
+              child: const LoginScreen(),
+            ),
         HomeScreen.routeName: (context) => HomeScreen(),
-        // RegisterScreen.routeName: (context) => RegisterScreen(),
-        // ForgetPasswordScreen.routeName: (context) => ForgetPasswordScreen(),
-        // ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
+        RegisterScreen.routeName: (context) => RegisterScreen(),
+        ForgetPasswordScreen.routeName: (context) => ForgetPasswordScreen(),
+        ResetPasswordScreen.routeName: (context) => ResetPasswordScreen(),
         SplashScreen.routeName: (context) => SplashScreen(),
         CategoriesTab.routeName: (context) => CategoriesTab(),
         CartScreen.routeName: (context) => CartScreen(),

@@ -2,7 +2,6 @@ import 'package:electro_app_team/services/login_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';import '../../utils/shared_perefrences.dart';
 
 import 'login_state.dart';
-import 'package:electro_app_team/cubits/login/login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final LoginService loginService;

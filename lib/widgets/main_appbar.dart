@@ -13,7 +13,7 @@ class MainAppbar extends StatelessWidget implements PreferredSizeWidget {
   final bool showCartIcon;
   final bool removePadding;
 
-  MainAppbar({
+  MainAppbar({super.key, 
     required this.width,
     required this.height,
     this.showCartIcon = true,

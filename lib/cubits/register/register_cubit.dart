@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../models/register_model.dart';
 import '../../services/register_service.dart';
 import 'register_state.dart';
 import 'package:flutter/material.dart';

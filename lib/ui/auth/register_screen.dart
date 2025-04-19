@@ -11,7 +11,7 @@ import '../../providers/theme_provider.dart';
 import '../../utils/app_assets.dart';
 
 class RegisterScreen extends StatefulWidget {
-  RegisterScreen({super.key});
+  const RegisterScreen({super.key});
   static const String routeName = "RegisterScreen";
 
   @override
@@ -176,7 +176,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           validator: (value) {
             if (value == null || value.isEmpty) {
               return "Address is required";
-            }else if(value!.length < 6 ){
+            }else if(value.length < 6 ){
               return "Password too short";
             }
             return null;

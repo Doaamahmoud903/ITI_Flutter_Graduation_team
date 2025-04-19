@@ -1,9 +1,7 @@
 import 'dart:math';
 import 'package:electro_app_team/models/product_model.dart';
 import 'package:electro_app_team/services/product_service.dart';
-import 'package:electro_app_team/ui/home/tabs/categories_tab/categories_tab.dart';
 import 'package:electro_app_team/utils/app_assets.dart';
-import 'package:electro_app_team/utils/app_colors.dart';
 import 'package:electro_app_team/widgets/carosuel_widget.dart';
 import 'package:electro_app_team/widgets/home_carousal_item.dart';
 import 'package:electro_app_team/widgets/main_appbar.dart';

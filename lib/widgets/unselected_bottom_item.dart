@@ -21,7 +21,7 @@ class _UnselectedBottomItemState extends State<UnselectedBottomItem> {
       child: Text(
         widget.selectedItem,
         textAlign: TextAlign.start,
-        style: Theme.of(context)!.textTheme.headlineLarge,
+        style: Theme.of(context).textTheme.headlineLarge,
       ),
 
     );

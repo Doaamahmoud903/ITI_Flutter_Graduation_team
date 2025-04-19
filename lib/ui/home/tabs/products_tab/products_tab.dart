@@ -41,8 +41,9 @@ class ProductsTab extends StatelessWidget {
                   ),
                   itemBuilder: (context, index) {
                     final product = state.products[index];
+                 
+                      return ProductCard(product: product);
 
-                    return ProductCard(product: product);
                   },
                 ),
               );
@@ -61,14 +62,12 @@ class ProductCard extends StatelessWidget {
   const ProductCard({super.key, required this.product});
 
   @override
-  @override
   Widget build(BuildContext context) {
     var languageProvider = Provider.of<LanguageProvider>(context);
     var themeProvider = Provider.of<ThemeProvider>(context);
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
-
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         Navigator.push(
           context,
@@ -80,12 +79,12 @@ class ProductCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: AppColors.primaryColor, width: 2),
+          border: Border.all(
+            color: AppColors.primaryColor,
+            width: 2
+          )
         ),
-        padding: EdgeInsets.symmetric(
-          horizontal: width * 0.02,
-          vertical: height * 0.01,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: width*0.02 , vertical: height*0.01),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -97,7 +96,7 @@ class ProductCard extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(8),
                         child: Image.network(
-                          product.image,
+                          product.image ?? "",
                           height: 100,
                           width: double.infinity,
                           fit: BoxFit.contain,
@@ -113,89 +112,86 @@ class ProductCard extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: height * 0.01),
+             SizedBox(height: height*0.01),
             Text(
-              product.title
-                  .split(' ')
-                  .map(
-                    (str) =>
-                        str.isNotEmpty
-                            ? str[0].toUpperCase() +
-                                str.substring(1).toLowerCase()
-                            : '',
-                  )
-                  .join(' '),
+              product.title.split(' ').map((str) => str.isNotEmpty
+              ? str[0].toUpperCase() + str.substring(1).toLowerCase()
+          : '').join(' ') ?? "No Name",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
-            SizedBox(height: height * 0.01),
+            // SizedBox(height: height*0.01),
+            // Text(
+            //   product.description ?? "No description",
+            //   maxLines: 1,
+            //   overflow: TextOverflow.ellipsis,
+            //   style: TextStyle(color: AppColors.lightGrayColor, fontSize: 12),
+            // ),
+            SizedBox(height: height*0.01),
             Row(
               children: [
                 Text(
                   'EGP ${product.price}',
                   style: TextStyle(
                     fontSize: 14,
-                    color:
-                        themeProvider.currentTheme == ThemeMode.light
-                            ? AppColors.blackColor
-                            : AppColors.whiteColor,
+                    color: themeProvider.currentTheme == ThemeMode.light
+                      ? AppColors.blackColor
+                        :AppColors.whiteColor
                   ),
                 ),
-                SizedBox(width: width * 0.02),
-                if (product.priceAfterDiscount.isNotEmpty)
+                 SizedBox(width: width*0.02),
+                if (product.priceAfterDiscount != null)
                   Text(
                     'EGP ${product.priceAfterDiscount}',
-                    style: TextStyle(
+                    style:  TextStyle(
                       decoration: TextDecoration.lineThrough,
-                      fontSize: 14,
-                      color:
-                          themeProvider.currentTheme == ThemeMode.light
-                              ? AppColors.primaryColor
-                              : AppColors.darkBlueColor,
+                        fontSize: 14,
+                        color: themeProvider.currentTheme == ThemeMode.light
+                            ? AppColors.primaryColor
+                            :AppColors.darkBlueColor
                     ),
                   ),
               ],
             ),
-            SizedBox(height: height * 0.01),
+            SizedBox(height: height*0.01),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      'Review (${(double.tryParse(product.rateAvg) ?? 0).toStringAsFixed(1)})',
+              Row(
+                children: [
+                  Text(
+                      'Review (${(double.tryParse(product.rateAvg?.toString() ?? '0') ?? 0).toStringAsFixed(1)})',
                       style: TextStyle(
-                        color:
-                            themeProvider.currentTheme == ThemeMode.light
-                                ? AppColors.blackColor
-                                : AppColors.whiteColor,
-                        fontSize: 14,
-                      ),
-                    ),
-                    ImageIcon(
-                      AssetImage(AppAssets.starIcon),
-                      color: Color(0xFFFDD835),
-                    ),
-                  ],
-                ),
+                          color: themeProvider.currentTheme == ThemeMode.light
+                              ? AppColors.blackColor
+                              :AppColors.whiteColor
+                          ,fontSize: 14
+                      )
+                  ),
+                  ImageIcon(AssetImage(AppAssets.starIcon) , color: Color(0xFFFDD835),),
+                ],
+              ),
                 Container(
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color:
-                        themeProvider.currentTheme == ThemeMode.light
-                            ? AppColors.darkBlueColor
-                            : AppColors.primaryColor,
+                    color: themeProvider.currentTheme == ThemeMode.light
+                        ? AppColors.darkBlueColor
+                        :AppColors.primaryColor,
                     shape: BoxShape.circle,
+
                   ),
-                  child: Icon(
-                    Icons.add,
-                    color:
-                        themeProvider.currentTheme == ThemeMode.light
-                            ? AppColors.whiteColor
-                            : AppColors.darkBlueColor,
-                  ),
+
+                    child: IconButton(
+                      icon: Icon(Icons.add,
+                          color: themeProvider.currentTheme == ThemeMode.light
+                          ? AppColors.whiteColor
+                          :AppColors.darkBlueColor),
+                      onPressed: () {
+                      },
+                    ),
+
                 ),
               ],
             ),

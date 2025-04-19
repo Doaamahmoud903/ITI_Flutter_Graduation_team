@@ -1,6 +1,5 @@
 import 'package:electro_app_team/ui/onboarding/splash_pages.dart';
 import 'package:electro_app_team/ui/onboarding/splash_welcome.dart';
-import 'package:electro_app_team/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 
 

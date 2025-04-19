@@ -1,18 +1,12 @@
-import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:electro_app_team/widgets/home_carousal_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../models/category_model.dart';
 import '../../../../models/product_model.dart';
 import '../../../../providers/language_provider.dart';
 import '../../../../providers/theme_provider.dart';
-import '../../../../services/category_service.dart';
 import '../../../../services/product_service.dart';
-import '../../../../utils/app_assets.dart';
 import '../../../../utils/app_colors.dart';
-import '../../../../widgets/categort_item.dart';
 
 class ContentArea extends StatefulWidget {
   final String categoryName;
@@ -129,15 +123,15 @@ class _ContentAreaState extends State<ContentArea> {
                        SizedBox(height: height*0.01,),
                        Container(
                          padding: EdgeInsets.symmetric(horizontal: width*.04 , vertical: height*0.01),
+                         decoration: BoxDecoration(
+                           borderRadius: BorderRadius.circular(25),
+                           color:  AppColors.blueColor,
+                         ),
                          child: Text("Shop Now".toUpperCase() ,
                            style: TextStyle(
                              color: AppColors.whiteColor,
                            )
                            ,),
-                         decoration: BoxDecoration(
-                           borderRadius: BorderRadius.circular(25),
-                           color:  AppColors.blueColor,
-                         ),
                        )
                      ],
                    ),

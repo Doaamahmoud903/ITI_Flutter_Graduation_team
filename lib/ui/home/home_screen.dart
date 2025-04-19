@@ -1,5 +1,3 @@
-import 'package:dio/dio.dart';
-import 'package:electro_app_team/models/category_model.dart';
 import 'package:electro_app_team/ui/home/tabs/account_tab/account_tab.dart';
 import 'package:electro_app_team/ui/home/tabs/categories_tab/categories_tab.dart';
 import 'package:electro_app_team/ui/home/tabs/home_tab/home_tab.dart';
@@ -7,17 +5,16 @@ import 'package:electro_app_team/ui/home/tabs/products_tab/products_tab.dart';
 import 'package:electro_app_team/ui/home/tabs/wishlist_tab/wishlist_tab.dart';
 import 'package:electro_app_team/utils/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/language_provider.dart';
 import '../../providers/theme_provider.dart';
-import '../../services/category_service.dart';
 import '../../utils/app_assets.dart';
-import '../../utils/app_styles.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = "HomeScreen";
+
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -60,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
         body: tabs[selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: Theme.of(context)!.bottomNavigationBarTheme.backgroundColor,
+            backgroundColor: Theme.of(context).bottomNavigationBarTheme.backgroundColor,
             type: BottomNavigationBarType.fixed,
             currentIndex: selectedIndex,
             onTap: (index){

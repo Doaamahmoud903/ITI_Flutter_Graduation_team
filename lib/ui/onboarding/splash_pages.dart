@@ -8,7 +8,6 @@ import '../../providers/theme_provider.dart';
 import '../../utils/app_assets.dart';
 import '../../utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:icons_plus/icons_plus.dart';
 
 class SplashPages extends StatefulWidget {
   const SplashPages({super.key});
@@ -220,13 +219,13 @@ class _SplashPagesState extends State<SplashPages> {
       final token = prefs.getString('userToken');
       Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
 
-      // if (isLoggedIn && token != null) {
-      //   // لو مسجل دخول
-      //   Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
-      // } else {
-      //   // يروح لشاشة اللوجن
-      //   Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
-      // }
+      if (isLoggedIn && token != null) {
+        // لو مسجل دخول
+        Navigator.of(context).pushReplacementNamed(HomeScreen.routeName);
+      } else {
+        // يروح لشاشة اللوجن
+        Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+      }
     }
   }
 }

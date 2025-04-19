@@ -71,7 +71,7 @@ class ProductDetailsScreen extends StatelessWidget {
                   border: Border.all(color: AppColors.primaryColor, width: 2),
                 ),
                 child: Stack(
-                  clipBehavior: Clip.none, // مهم عشان يسمح بخروج العناصر من الـ Stack
+                  clipBehavior: Clip.none, 
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16),

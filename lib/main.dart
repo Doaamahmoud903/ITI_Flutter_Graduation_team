@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:electro_app_team/cubits/categories/category_cubit.dart';
 import 'package:electro_app_team/cubits/products/products_cubit.dart';
+import 'package:electro_app_team/cubits/profile%20data/get_profile_data_cubit.dart';
 import 'package:electro_app_team/providers/language_provider.dart';
 import 'package:electro_app_team/providers/theme_provider.dart';
 import 'package:electro_app_team/services/login_service.dart';
@@ -33,14 +34,26 @@ void main() async {
 
       child: MultiBlocProvider(
         providers: [
-          BlocProvider(create: (context) => LoginCubit(loginService: LoginService(dio: Dio()))),
-          BlocProvider(create: (context) => RegisterCubit(RegisterService(dio: Dio()))),
+          BlocProvider(
+            create:
+                (context) => LoginCubit(loginService: LoginService(dio: Dio())),
+          ),
+          BlocProvider(
+            create: (context) => RegisterCubit(RegisterService(dio: Dio())),
+          ),
           BlocProvider(create: (context) => CategoryCubit()),
           BlocProvider(create: (context) => ProductsCubit()),
           BlocProvider(create: (_) => CartCubit()),
           BlocProvider<ResetPasswordCubit>(
-           create: (context) => ResetPasswordCubit(),
-           ),
+            create: (context) => ResetPasswordCubit(),
+          ),
+          BlocProvider(
+            create: (context) {
+              String token =
+                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODAxMTIzN2E1NGVkNGExYTYyZjM2MTQiLCJlbWFpbCI6ImFuYTYwZG9kYUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc0NTMwMzU0Mn0.ceAWk_n1OWRIf39_Q8BCqh-YUsBNon05Txjf9EAddf4"; // استبدل بالتوكن الفعلي
+              return GetProfileDataCubit()..getProfileData(token);
+            },
+          ),
         ],
         child: const MyApp(),
       ),

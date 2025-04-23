@@ -6,6 +6,7 @@ import 'package:electro_app_team/providers/theme_provider.dart';
 import 'package:electro_app_team/utils/app_colors.dart';
 import 'package:electro_app_team/widgets/user_account_details.dart';
 import 'package:electro_app_team/widgets/user_details.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,8 +39,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     var languageProvider = Provider.of<LanguageProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Profile',
+        title: Text(
+          AppLocalizations.of(context)!.profile,
           style: TextStyle(color: AppColors.darkBlueColor, fontSize: 20),
         ),
       ),

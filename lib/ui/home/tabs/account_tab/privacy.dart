@@ -2,16 +2,22 @@ import 'package:electro_app_team/widgets/user_account_details.dart';
 import 'package:electro_app_team/widgets/user_details.dart';
 import 'package:flutter/material.dart';
 import 'package:electro_app_team/utils/app_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class PrivacyScreen extends StatelessWidget {
+class PrivacyScreen extends StatefulWidget {
   const PrivacyScreen({super.key});
 
+  @override
+  State<PrivacyScreen> createState() => _PrivacyScreenState();
+}
+
+class _PrivacyScreenState extends State<PrivacyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Privacy',
+        title: Text(
+          AppLocalizations.of(context)!.privacy,
           style: TextStyle(color: AppColors.blueColor, fontSize: 20),
         ),
       ),

@@ -9,9 +9,7 @@ class CartCubit extends Cubit<CartState> {
   Dio dio = Dio(
     BaseOptions(
       baseUrl: 'https://e-commerce-node-seven.vercel.app/api/v1/',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json'},
     ),
   );
 
@@ -20,7 +18,7 @@ class CartCubit extends Cubit<CartState> {
 
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('user_token');
+      final token = prefs.getString('token');
 
       if (token == null) {
         emit(CartFailure("No token found"));
@@ -30,7 +28,7 @@ class CartCubit extends Cubit<CartState> {
       final response = await dio.post(
         'cart',
         data: {"productId": productId},
-        options: Options(headers: {"token": "Bearer $token"}),
+        options: Options(headers: {"token": token}),
       );
 
       emit(CartSuccess(response.data));

@@ -1,5 +1,5 @@
-import 'package:electro_app_team/cubits/profile%20data/get_profile_data_cubit.dart';
-import 'package:electro_app_team/cubits/profile%20data/get_profile_data_state.dart';
+import 'package:electro_app_team/cubits/profile/profile_cubit.dart';
+import 'package:electro_app_team/cubits/profile/profile_state.dart';
 import 'package:electro_app_team/models/profile_model.dart';
 import 'package:electro_app_team/providers/language_provider.dart';
 import 'package:electro_app_team/providers/theme_provider.dart';
@@ -7,13 +7,14 @@ import 'package:electro_app_team/utils/app_colors.dart';
 import 'package:electro_app_team/widgets/user_account_details.dart';
 import 'package:electro_app_team/widgets/user_details.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:electro_app_team/utils/shared_perefrences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+  static const String routeName = 'ProfileScreen';
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -23,12 +24,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   int selectedIndex = 0;
   var width;
   var height;
+
   @override
   void initState() {
-    String token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODAxMTIzN2E1NGVkNGExYTYyZjM2MTQiLCJlbWFpbCI6ImFuYTYwZG9kYUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc0NTMwMzU0Mn0.ceAWk_n1OWRIf39_Q8BCqh-YUsBNon05Txjf9EAddf4";
     super.initState();
-    BlocProvider.of<GetProfileDataCubit>(context).getProfileData(token);
+    _loadTokenAndFetchProfile();
+  }
+
+  void _loadTokenAndFetchProfile() async {
+    String? token = await StorageService().getToken();
+    if (token != null) {
+      BlocProvider.of<ProfileCubit>(context).fetchProfile(token);
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Token not found. Please log in again.")),
+      );
+    }
   }
 
   @override
@@ -37,6 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     height = MediaQuery.of(context).size.height;
     var themeProvider = Provider.of<ThemeProvider>(context);
     var languageProvider = Provider.of<LanguageProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -46,43 +58,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.only(left: 15),
-        child: BlocBuilder<GetProfileDataCubit, ProfileDataState>(
+        child: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
-            ProfileModel? profile;
-            if (state is ProfileDataLoading) {
+            ProfileResponse? profile;
+
+            if (state is ProfileLoading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state is ProfileDataFailed) {
+            } else if (state is ProfileError) {
               return Center(
                 child: Text(
                   state.message,
                   style: const TextStyle(color: Colors.red),
                 ),
               );
-            } else if (state is ProfileDataSuccess) {
-              profile = state.profileModel!;
+            } else if (state is ProfileLoaded) {
+              profile = state.profileResponse!;
+              print(profile.user.name);
             }
+
+            if (profile == null) {
+              return const Center(child: Text("No profile data available"));
+            }
+
             return Column(
               children: [
-                UserDetails(),
-                // const SizedBox(height: 10),
-                UserAccountDetails(
-                  labelText: "Your full name",
-                  initialText: profile!.name,
+                UserDetails(
+                  name: profile!.user.name,
+                  email: profile!.user.email,
                 ),
-                // const SizedBox(height: 5),
                 UserAccountDetails(
-                  labelText: "Your email",
-                  initialText: profile!.email,
+                  labelText: AppLocalizations.of(context)!.full_name,
+                  initialText: profile!.user.name,
                 ),
-                // const SizedBox(height: 5),
                 UserAccountDetails(
-                  labelText: "Your mobile number",
-                  initialText: profile!.mobileNumber,
+                  labelText: AppLocalizations.of(context)!.email,
+                  initialText: profile!.user.email,
                 ),
-                // const SizedBox(height: 5),
                 UserAccountDetails(
-                  labelText: "Your address",
-                  initialText: profile!.address,
+                  labelText: AppLocalizations.of(context)!.phone_number,
+                  initialText: profile!.user.phone,
+                ),
+                UserAccountDetails(
+                  labelText: AppLocalizations.of(context)!.address,
+                  initialText: profile!.user.address,
                 ),
               ],
             );

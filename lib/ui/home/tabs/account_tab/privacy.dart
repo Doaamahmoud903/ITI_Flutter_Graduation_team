@@ -26,7 +26,7 @@ class _PrivacyScreenState extends State<PrivacyScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            UserDetails(),
+            // UserDetails(),
             UserAccountDetails(
               initialText: "**********************",
               labelText: "Current Password",

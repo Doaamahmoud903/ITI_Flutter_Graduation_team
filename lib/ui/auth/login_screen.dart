@@ -35,20 +35,21 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     var height = MediaQuery.of(context).size.height;
     var themeProvider = Provider.of<ThemeProvider>(context);
     var languageProvider = Provider.of<LanguageProvider>(context);
-    Color themeColor = themeProvider.currentTheme == ThemeMode.light
-        ? AppColors.lightGrayColor
-        : AppColors.primaryColor;
+    Color themeColor =
+        themeProvider.currentTheme == ThemeMode.light
+            ? AppColors.lightGrayColor
+            : AppColors.primaryColor;
 
-    TextStyle hintTheme = themeProvider.currentTheme == ThemeMode.light
-        ? AppStyles.semibold14lightGray
-        : AppStyles.semibold14lightblue;
+    TextStyle hintTheme =
+        themeProvider.currentTheme == ThemeMode.light
+            ? AppStyles.semibold14lightGray
+            : AppStyles.semibold14lightblue;
 
     return Scaffold(
       body: GestureDetector(
@@ -70,8 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       Image.asset(
                         themeProvider.currentTheme == ThemeMode.light
                             ? languageProvider.currentLocal == "en"
-                            ? AppAssets.mainLogo
-                            : AppAssets.logoArDark
+                                ? AppAssets.mainLogo
+                                : AppAssets.logoArDark
                             : languageProvider.currentLocal == "en"
                             ? AppAssets.mainLogoLight
                             : AppAssets.logoArLight,
@@ -84,9 +85,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: EdgeInsets.symmetric(horizontal: width * 0.02),
                     child: Text(
                       AppLocalizations.of(context)!.login_welcome,
-                      style: themeProvider.currentTheme == ThemeMode.light
-                          ? AppStyles.bold24lightGray
-                          : AppStyles.bold24white,
+                      style:
+                          themeProvider.currentTheme == ThemeMode.light
+                              ? AppStyles.bold24lightGray
+                              : AppStyles.bold24white,
                     ),
                   ),
                   Padding(
@@ -154,7 +156,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: TextButton(
                       onPressed: () {
                         Navigator.pushNamed(
-                            context, ForgetPasswordScreen.routeName);
+                          context,
+                          ForgetPasswordScreen.routeName,
+                        );
                       },
                       child: Text(
                         AppLocalizations.of(context)!.forget_password,
@@ -170,11 +174,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   BlocConsumer<LoginCubit, LoginState>(
                     listener: (context, state) async {
                       if (state is LoginSuccess) {
-                        // add login to SharedPreferences
-                        final prefs = await SharedPreferences.getInstance();
-                        await prefs.setBool('isLoggedIn', true);
-                        await prefs.setString('userToken', state.token); // حفظ التوكن لو حابة تستخدميه لاحقًا
-
                         // success message
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -183,12 +182,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         );
 
                         // navigate to home
-                        Navigator.pushReplacementNamed(context, HomeScreen.routeName);
+                        Navigator.pushReplacementNamed(
+                          context,
+                          HomeScreen.routeName,
+                        );
                       } else if (state is LoginError) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Error: ${state.message}"),
-                          ),
+                          SnackBar(content: Text("Error: ${state.message}")),
                         );
                       }
                     },
@@ -204,21 +204,26 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor:
-                            themeProvider.currentTheme == ThemeMode.light
-                                ? AppColors.blueColor
-                                : AppColors.primaryColor,
+                                themeProvider.currentTheme == ThemeMode.light
+                                    ? AppColors.blueColor
+                                    : AppColors.primaryColor,
                             padding: const EdgeInsets.symmetric(vertical: 14),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          child: state is LoginLoading
-                              ? const CircularProgressIndicator(color: Colors.white)
-                              : Text(
-                            AppLocalizations.of(context)!.login,
-                            style: const TextStyle(
-                                fontSize: 20, color: AppColors.whiteColor),
-                          ),
+                          child:
+                              state is LoginLoading
+                                  ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                  : Text(
+                                    AppLocalizations.of(context)!.login,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      color: AppColors.whiteColor,
+                                    ),
+                                  ),
                         ),
                       );
                     },
@@ -234,7 +239,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, RegisterScreen.routeName);
+                          Navigator.pushNamed(
+                            context,
+                            RegisterScreen.routeName,
+                          );
                         },
                         child: Text(
                           AppLocalizations.of(context)!.create_account,

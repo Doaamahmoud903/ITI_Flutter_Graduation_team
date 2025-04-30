@@ -1,3 +1,4 @@
+import 'package:electro_app_team/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:electro_app_team/utils/app_colors.dart';
 
@@ -26,7 +27,7 @@ class UserCircleimage extends StatelessWidget {
 
             child: CircleAvatar(
               radius: 40,
-              backgroundImage: AssetImage('assets/images/profile.png'),
+              backgroundImage: AssetImage(AppAssets.profileIcon),
             ),
           ),
         ),

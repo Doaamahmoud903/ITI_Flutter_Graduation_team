@@ -33,7 +33,9 @@ class SearchResultsScreen extends StatelessWidget {
           } else if (state is ProductsFailure) {
             return Center(child: Text(state.error));
           } else if (state is ProductsEmpty) {
-            return Center(child: Text(AppLocalizations.of(context)!.no_products));
+            return Center(
+              child: Text(AppLocalizations.of(context)!.no_products),
+            );
           } else if (state is ProductsLoaded) {
             return _buildProductList(state.products, themeProvider);
           }
@@ -43,7 +45,10 @@ class SearchResultsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildProductList(List<ProductModel> products, ThemeProvider themeProvider) {
+  Widget _buildProductList(
+    List<ProductModel> products,
+    ThemeProvider themeProvider,
+  ) {
     return ListView.builder(
       itemCount: products.length,
       itemBuilder: (context, index) {
@@ -51,21 +56,30 @@ class SearchResultsScreen extends StatelessWidget {
         return ListTile(
           leading: Image.network(product.image),
           title: Text(
-            product.title.split(' ').map((str) => str.isNotEmpty
-                ? str[0].toUpperCase() + str.substring(1).toLowerCase()
-                : '').join(' '),
+            product.title
+                .split(' ')
+                .map(
+                  (str) =>
+                      str.isNotEmpty
+                          ? str[0].toUpperCase() +
+                              str.substring(1).toLowerCase()
+                          : '',
+                )
+                .join(' '),
             style: TextStyle(
-              color: themeProvider.currentTheme == ThemeMode.light
-                  ? AppColors.blackColor
-                  : AppColors.whiteColor,
+              color:
+                  themeProvider.currentTheme == ThemeMode.light
+                      ? AppColors.blackColor
+                      : AppColors.whiteColor,
             ),
           ),
           subtitle: Text(
             'EGP ${product.price}',
             style: TextStyle(
-              color: themeProvider.currentTheme == ThemeMode.light
-                  ? AppColors.blackColor
-                  : AppColors.whiteColor,
+              color:
+                  themeProvider.currentTheme == ThemeMode.light
+                      ? AppColors.blackColor
+                      : AppColors.whiteColor,
             ),
           ),
           onTap: () {

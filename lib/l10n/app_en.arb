@@ -19,7 +19,7 @@
   "searchHint" : "what do you search for?",
   "privacy" : "Privacy",
   "profile" : "Profile",
-  "welcome": "Welcome, Mohamed",
+  "welcome": "Welcome",
   "error" : "An error occurred. Please try again later.",
   "no_categories": "No categories to display.",
   "no_products": "No Products to display.",
@@ -62,6 +62,7 @@
   "password_complexity": "Password must contain uppercase, lowercase & numbers",
   "confirm_password_required": "Please confirm your password",
   "passwords_not_match": "Passwords don't match",
-  "add_to_cart": "Add to Cart"
+  "add_to_cart": "Add to Cart",
+  "full_name":"Full Name"
 
 }

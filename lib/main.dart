@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:electro_app_team/cubits/categories/category_cubit.dart';
 import 'package:electro_app_team/cubits/products/products_cubit.dart';
-import 'package:electro_app_team/cubits/profile%20data/get_profile_data_cubit.dart';
+import 'package:electro_app_team/cubits/profile/profile_cubit.dart';
 import 'package:electro_app_team/providers/language_provider.dart';
 import 'package:electro_app_team/providers/theme_provider.dart';
 import 'package:electro_app_team/services/login_service.dart';
+import 'package:electro_app_team/services/profile_service.dart';
 import 'package:electro_app_team/services/register_service.dart';
 import 'package:electro_app_team/ui/auth/forget_password_screen.dart';
 import 'package:electro_app_team/ui/auth/login_screen.dart';
@@ -12,6 +13,7 @@ import 'package:electro_app_team/ui/auth/register_screen.dart';
 import 'package:electro_app_team/ui/auth/reset_password.dart';
 import 'package:electro_app_team/ui/cart/cart_screen.dart';
 import 'package:electro_app_team/ui/home/home_screen.dart';
+import 'package:electro_app_team/ui/home/tabs/account_tab/profile.dart';
 import 'package:electro_app_team/ui/home/tabs/categories_tab/categories_tab.dart';
 import 'package:electro_app_team/ui/onboarding/splash_screen.dart';
 import 'package:electro_app_team/utils/app_themes.dart';
@@ -48,11 +50,7 @@ void main() async {
             create: (context) => ResetPasswordCubit(),
           ),
           BlocProvider(
-            create: (context) {
-              String token =
-                  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODAxMTIzN2E1NGVkNGExYTYyZjM2MTQiLCJlbWFpbCI6ImFuYTYwZG9kYUBnbWFpbC5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTc0NTMwMzU0Mn0.ceAWk_n1OWRIf39_Q8BCqh-YUsBNon05Txjf9EAddf4"; // استبدل بالتوكن الفعلي
-              return GetProfileDataCubit()..getProfileData(token);
-            },
+            create: (context) => ProfileCubit(ProfileService(dio: Dio())),
           ),
         ],
         child: const MyApp(),
@@ -88,6 +86,7 @@ class MyApp extends StatelessWidget {
         SplashScreen.routeName: (context) => SplashScreen(),
         CategoriesTab.routeName: (context) => CategoriesTab(),
         CartScreen.routeName: (context) => CartScreen(),
+        ProfileScreen.routeName: (context) => ProfileScreen(),
       },
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

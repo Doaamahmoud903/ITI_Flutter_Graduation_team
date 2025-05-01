@@ -9,13 +9,11 @@ class CartCubit extends Cubit<CartState> {
   Dio dio = Dio(
     BaseOptions(
       baseUrl: 'https://e-commerce-node-seven.vercel.app/api/v1/',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json'},
     ),
   );
 
-  Future<void> addToCart(String productId) async {
+  Future<void> addToCart(String productId, int quantity) async {
     emit(CartLoading());
 
     try {
@@ -29,7 +27,7 @@ class CartCubit extends Cubit<CartState> {
 
       final response = await dio.post(
         'cart',
-        data: {"productId": productId},
+        data: {"productId": productId, "quantity": quantity},
         options: Options(headers: {"token": "Bearer $token"}),
       );
 

@@ -1,3 +1,5 @@
+import 'package:electro_app_team/cubits/cart/cart_cubit.dart';
+import 'package:electro_app_team/ui/cart/cart_screen.dart';
 import 'package:electro_app_team/utils/app_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:electro_app_team/models/product_model.dart';
@@ -6,10 +8,17 @@ import 'package:provider/provider.dart';
 
 import '../../../../providers/theme_provider.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
+class ProductDetailsScreen extends StatefulWidget {
   final ProductModel product;
 
   const ProductDetailsScreen({super.key, required this.product});
+
+  @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  int quantity = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -21,29 +30,33 @@ class ProductDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          product.title
+          widget.product.title
               .split(' ')
               .where((word) => word.isNotEmpty)
               .take(4)
-              .map((str) => str[0].toUpperCase() + str.substring(1).toLowerCase())
+              .map(
+                (str) => str[0].toUpperCase() + str.substring(1).toLowerCase(),
+              )
               .join(' '),
           style: theme.textTheme.headlineMedium?.copyWith(
             fontWeight: FontWeight.w600,
             fontSize: 20,
-            color:themeProvider.currentTheme == ThemeMode.light?
-          AppColors.darkBlueColor
-              :AppColors.whiteColor,
+            color:
+                themeProvider.currentTheme == ThemeMode.light
+                    ? AppColors.darkBlueColor
+                    : AppColors.whiteColor,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
         actions: [
           IconButton(
-            icon:  Icon(
+            icon: Icon(
               Icons.search_rounded,
-              color:themeProvider.currentTheme == ThemeMode.light?
-              AppColors.darkBlueColor
-                  :AppColors.whiteColor,
+              color:
+                  themeProvider.currentTheme == ThemeMode.light
+                      ? AppColors.darkBlueColor
+                      : AppColors.whiteColor,
               size: 25,
             ),
             onPressed: () {},
@@ -52,9 +65,10 @@ class ProductDetailsScreen extends StatelessWidget {
             padding: const EdgeInsets.only(right: 10),
             child: ImageIcon(
               AssetImage(AppAssets.cartIcon),
-              color:themeProvider.currentTheme == ThemeMode.light?
-              AppColors.darkBlueColor
-                  :AppColors.whiteColor,
+              color:
+                  themeProvider.currentTheme == ThemeMode.light
+                      ? AppColors.darkBlueColor
+                      : AppColors.whiteColor,
             ),
           ),
         ],
@@ -71,12 +85,12 @@ class ProductDetailsScreen extends StatelessWidget {
                   border: Border.all(color: AppColors.primaryColor, width: 2),
                 ),
                 child: Stack(
-                  clipBehavior: Clip.none, 
+                  clipBehavior: Clip.none,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(16),
                       child: Image.network(
-                        product.image,
+                        widget.product.image,
                         height: height * 0.3,
                         width: double.infinity,
                         fit: BoxFit.contain,
@@ -92,11 +106,15 @@ class ProductDetailsScreen extends StatelessWidget {
                       left: 1,
                       right: 1,
                       child: Container(
-                        padding:  EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
-                          color: themeProvider.currentTheme == ThemeMode.light?
-                          AppColors.whiteColor
-                          :AppColors.darkBlueColor,
+                          color:
+                              themeProvider.currentTheme == ThemeMode.light
+                                  ? AppColors.whiteColor
+                                  : AppColors.darkBlueColor,
                           borderRadius: BorderRadius.circular(12),
                           boxShadow: [
                             BoxShadow(
@@ -110,20 +128,23 @@ class ProductDetailsScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                                product.title
-                                    .split(' ')
-                                    .where((word) => word.isNotEmpty)
-                                    .take(2)
-                                    .map((str) => str[0].toUpperCase() + str.substring(1).toLowerCase())
-                                    .join(' ')
-                                ,
-                                style: theme.textTheme.headlineMedium
+                              widget.product.title
+                                  .split(' ')
+                                  .where((word) => word.isNotEmpty)
+                                  .take(2)
+                                  .map(
+                                    (str) =>
+                                        str[0].toUpperCase() +
+                                        str.substring(1).toLowerCase(),
+                                  )
+                                  .join(' '),
+                              style: theme.textTheme.headlineMedium,
                             ),
                             Row(
                               children: [
                                 const SizedBox(width: 4),
                                 Text(
-                                  'EGP ${product.price}',
+                                  'EGP ${widget.product.price}',
                                   style: theme.textTheme.headlineLarge,
                                 ),
                               ],
@@ -134,62 +155,77 @@ class ProductDetailsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-
               ),
             ),
             const SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                    "3,230 Sold",
-                    style: theme.textTheme.headlineMedium
-                ),
+                Text("3,230 Sold", style: theme.textTheme.headlineMedium),
                 Row(
                   children: [
                     const Icon(Icons.star, color: Colors.amber, size: 20),
                     const SizedBox(width: 4),
                     Text(
-                      '${product.rateAvg} (7,500)',
+                      '${widget.product.rateAvg} (7,500)',
                       style: theme.textTheme.headlineLarge,
                     ),
                   ],
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    color:themeProvider.currentTheme == ThemeMode.light?
-                    AppColors.darkBlueColor
-                        :AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(25)
+                    color:
+                        themeProvider.currentTheme == ThemeMode.light
+                            ? AppColors.darkBlueColor
+                            : AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(25),
                   ),
                   child: Row(
                     children: [
-                      IconButton(onPressed: (){},
-                          icon: ImageIcon(AssetImage(AppAssets.plusIcon),color:AppColors.whiteColor,)),
-                      Text("1",
+                      IconButton(
+                        onPressed: () {
+                          setState(() {
+                            quantity++;
+                          });
+                        },
+                        icon: ImageIcon(
+                          AssetImage(AppAssets.plusIcon),
+                          color: AppColors.whiteColor,
+                        ),
+                      ),
+                      Text(
+                        "$quantity",
                         style: TextStyle(
-                          color:AppColors.whiteColor,
+                          color: AppColors.whiteColor,
                           fontSize: 18,
-                        ),),
-                      IconButton(onPressed: (){},
-                          icon: ImageIcon(AssetImage(AppAssets.minusIcon),color:AppColors.whiteColor,)),
-
+                        ),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          if (quantity > 1) {
+                            setState(() {
+                              quantity--;
+                            });
+                          }
+                        },
+                        icon: ImageIcon(
+                          AssetImage(AppAssets.minusIcon),
+                          color: AppColors.whiteColor,
+                        ),
+                      ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
 
             const SizedBox(height: 16),
 
-            Text(
-              "Description",
-                style: theme.textTheme.headlineMedium
-            ),
+            Text("Description", style: theme.textTheme.headlineMedium),
             const SizedBox(height: 8),
 
             Text(
-              product.description,
+              widget.product.description,
               style: theme.textTheme.bodyMedium?.copyWith(
                 color: Colors.grey[700],
               ),
@@ -219,40 +255,51 @@ class ProductDetailsScreen extends StatelessWidget {
             //   ],
             // ),
             // const SizedBox(height: 32),
-
             Row(
               children: [
                 Column(
                   children: [
+                    Text("Total Price", style: theme.textTheme.headlineMedium),
                     Text(
-                        "Total Price",
-                        style: theme.textTheme.headlineMedium
-                    ),Text(
-                        'EGP ${product.price}',
-                        style: theme.textTheme.headlineMedium
+                      'EGP ${(double.parse(widget.product.price) * quantity).toStringAsFixed(0)}',
+                      style: theme.textTheme.headlineMedium,
                     ),
                   ],
-
                 ),
                 Spacer(),
                 SizedBox(
-                  width: width*0.5,
+                  width: width * 0.5,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      backgroundColor:themeProvider.currentTheme == ThemeMode.light?
-                      AppColors.blueColor
-                          :AppColors.primaryColor,
+                      backgroundColor:
+                          themeProvider.currentTheme == ThemeMode.light
+                              ? AppColors.blueColor
+                              : AppColors.primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
                       ),
                     ),
-                    onPressed: () {},
-                    icon:  Icon(Icons.shopping_cart ,  color:AppColors.whiteColor,),
-                    label:  Text(
+                    onPressed: () async {
+                      await context.read<CartCubit>().addToCart(
+                        widget.product.id,
+                        quantity,
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CartScreen()),
+                      );
+                    },
+                    icon: Icon(
+                      Icons.shopping_cart,
+                      color: AppColors.whiteColor,
+                    ),
+                    label: Text(
                       "Add to Cart",
-                      style: TextStyle(fontSize: 18,
-                        color:AppColors.whiteColor,),
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: AppColors.whiteColor,
+                      ),
                     ),
                   ),
                 ),

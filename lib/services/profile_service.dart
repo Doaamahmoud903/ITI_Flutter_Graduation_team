@@ -10,7 +10,7 @@ class ProfileService {
     try {
       Response response = await dio.get(
         "$baseUrl/users",
-        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        options: Options(headers: {'token': token}),
       );
       ProfileModel profileModel = ProfileModel.fromJson(response.data);
       return profileModel;

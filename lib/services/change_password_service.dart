@@ -15,7 +15,7 @@ class ChangePasswordService {
       Response response = await dio.put(
         "$baseUrl/users/update-account",
         data: {'currentPassword': currentPassword, 'newPassword': newPassword},
-        options: Options(headers: {'Authorization': 'Bearer $token'}),
+        options: Options(headers: {'token': token}),
       );
 
       return ChangePasswordResponseModel.fromJson(response.data);

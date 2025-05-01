@@ -15,9 +15,10 @@ class CartModel {
     return CartModel(
       id: json['_id'],
       totalCartPrice: json['totalCartPrice']?.toDouble() ?? 0.0,
-      cartItems: (json['cartItems'] as List)
-          .map((item) => CartItem.fromJson(item))
-          .toList(),
+      cartItems:
+          (json['products'] as List)
+              .map((item) => CartItem.fromJson(item))
+              .toList(),
     );
   }
 }
@@ -27,17 +28,13 @@ class CartItem {
   final int quantity;
   final ProductModel product;
 
-  CartItem({
-    required this.id,
-    required this.quantity,
-    required this.product,
-  });
+  CartItem({required this.id, required this.quantity, required this.product});
 
   factory CartItem.fromJson(Map<String, dynamic> json) {
     return CartItem(
       id: json['_id'],
       quantity: json['quantity'],
-      product: ProductModel.fromJson(json['product']),
+      product: ProductModel.fromJson(json['productId']),
     );
   }
 }

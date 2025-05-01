@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:electro_app_team/cubits/cart/get_cart_cubit.dart';
 import 'package:electro_app_team/cubits/categories/category_cubit.dart';
 import 'package:electro_app_team/cubits/products/products_cubit.dart';
 import 'package:electro_app_team/cubits/profile%20data/get_profile_data_cubit.dart';
@@ -44,6 +45,7 @@ void main() async {
           BlocProvider(create: (context) => CategoryCubit()),
           BlocProvider(create: (context) => ProductsCubit()),
           BlocProvider(create: (_) => CartCubit()),
+          BlocProvider(create: (_) => GetCartCubit()),
           BlocProvider<ResetPasswordCubit>(
             create: (context) => ResetPasswordCubit(),
           ),

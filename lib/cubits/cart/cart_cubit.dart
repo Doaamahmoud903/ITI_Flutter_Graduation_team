@@ -18,7 +18,7 @@ class CartCubit extends Cubit<CartState> {
 
     try {
       final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString('user_token');
+      final token = prefs.getString('token');
 
       if (token == null) {
         emit(CartFailure("No token found"));
@@ -27,8 +27,9 @@ class CartCubit extends Cubit<CartState> {
 
       final response = await dio.post(
         'cart',
-        data: {"productId": productId, "quantity": quantity},
-        options: Options(headers: {"token": "Bearer $token"}),
+
+        data: {"productId": productId},
+        options: Options(headers: {"token": token}),
       );
 
       emit(CartSuccess(response.data));

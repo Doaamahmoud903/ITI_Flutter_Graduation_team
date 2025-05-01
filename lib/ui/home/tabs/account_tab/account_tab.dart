@@ -1,3 +1,6 @@
+import 'package:electro_app_team/cubits/profile/profile_cubit.dart';
+import 'package:electro_app_team/cubits/profile/profile_state.dart';
+import 'package:electro_app_team/models/profile_model.dart';
 import 'package:electro_app_team/providers/language_provider.dart';
 import 'package:electro_app_team/ui/home/tabs/account_tab/privacy.dart';
 import 'package:electro_app_team/ui/home/tabs/account_tab/profile.dart';
@@ -5,6 +8,7 @@ import 'package:electro_app_team/utils/app_assets.dart';
 import 'package:electro_app_team/utils/app_styles.dart';
 import 'package:electro_app_team/widgets/settings_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../providers/theme_provider.dart';
@@ -49,30 +53,48 @@ class _AccountTabState extends State<AccountTab> {
               height: height * 0.09,
               width: 200,
             ),
-            Padding(
-              padding:
-                  languageProvider.currentLocal == "en"
-                      ? const EdgeInsets.only(left: 15)
-                      : const EdgeInsets.only(right: 18),
-              child: Text(
-                AppLocalizations.of(context)!.welcome,
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ),
-            Padding(
-              padding:
-                  languageProvider.currentLocal == "en"
-                      ? const EdgeInsets.only(left: 15)
-                      : const EdgeInsets.only(right: 18),
-              child: Text(
-                'mohamed.N@gmail.com',
-                style: TextStyle(
-                  color: Theme.of(context).focusColor,
-                  fontSize: 14,
-                ),
-              ),
-            ),
+            BlocBuilder<ProfileCubit, ProfileState>(
+              builder: (context, state) {
+                if (state is ProfileLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ProfileLoaded) {
+                  final ProfileResponse profile = state.profileResponse!;
 
+                  return Padding(
+                    padding:
+                        languageProvider.currentLocal == "en"
+                            ? const EdgeInsets.only(left: 15)
+                            : const EdgeInsets.only(right: 18),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "${AppLocalizations.of(context)!.welcome} ${profile.user.name ?? ''}",
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        const SizedBox(height: 5),
+                        Text(
+                          profile.user.email ?? '',
+                          style: TextStyle(
+                            color: Theme.of(context).focusColor,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                } else if (state is ProfileError) {
+                  return Center(
+                    child: Text(
+                      state.message,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  );
+                } else {
+                  return const Center(child: Text("No profile data"));
+                }
+              },
+            ),
             const SizedBox(height: 20),
             SettingsItem(
               title: AppLocalizations.of(context)!.profile,

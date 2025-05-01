@@ -1,23 +1,21 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class StorageService {
-  static const String _tokenKey = 'auth_token';
-
-  // Save token
+  // لحفظ التوكن
   Future<void> saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_tokenKey, token);
+    await prefs.setString('token', token);
   }
 
-  // Get token
+  // لاسترجاع التوكن
   Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(_tokenKey);
+    return prefs.getString('token');
   }
 
-  // Remove token (used in logout)
+  // لحذف التوكن
   Future<void> clearToken() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_tokenKey);
+    await prefs.remove('token');
   }
 }

@@ -47,6 +47,9 @@ dependencies:
   flutter_bloc: ^9.1.0
   carousel_slider_plus: ^7.1.0
   shared_preferences: ^2.5.3
+  speech_to_text: ^7.0.0
+  permission_handler: ^11.0.1
+  connectivity_plus: ^6.1.4
 
 
 dev_dependencies:

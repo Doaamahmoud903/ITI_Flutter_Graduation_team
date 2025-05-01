@@ -1,4 +1,4 @@
-class AppAssets{
+class AppAssets {
   static const String splashMainIcon = "assets/images/splashImg1.png";
   static const String splashIcon1 = "assets/images/Icon1.png";
   static const String splashIcon2 = "assets/images/Icon2.png";
@@ -38,8 +38,5 @@ class AppAssets{
   static const String googleIcon = "assets/images/googleIcon.png";
   static const String deleteIcon = "assets/images/delete.png";
   static const String starIcon = "assets/images/star.png";
-
-
-
-
+  static const String card = "assets/images/card.png";
 }

@@ -1,5 +1,7 @@
+import 'package:electro_app_team/providers/theme_provider.dart';
 import 'package:electro_app_team/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class UserAccountDetails extends StatefulWidget {
   final String initialText;
@@ -26,6 +28,12 @@ class _UserAccountDetailsState extends State<UserAccountDetails> {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeProvider>(context);
+    Color textColor =
+        themeProvider.currentTheme == ThemeMode.light
+            ? AppColors.darkBlueColor
+            : AppColors.whiteColor;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Column(
@@ -33,7 +41,7 @@ class _UserAccountDetailsState extends State<UserAccountDetails> {
         children: [
           Text(
             widget.labelText,
-            style: TextStyle(color: AppColors.darkBlueColor, fontSize: 16),
+            style: TextStyle(color: textColor, fontSize: 16),
           ),
           const SizedBox(height: 8),
           SizedBox(
@@ -41,36 +49,21 @@ class _UserAccountDetailsState extends State<UserAccountDetails> {
             height: 50,
             child: TextField(
               controller: _textController,
-              style: const TextStyle(
-                color: AppColors.darkBlueColor,
-                fontSize: 16,
-              ),
+              style: TextStyle(color: textColor, fontSize: 16),
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(
-                    color: AppColors.darkBlueColor,
-                    width: 0.8,
-                  ),
+                  borderSide: BorderSide(color: textColor, width: 0.8),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(
-                    color: AppColors.darkBlueColor,
-                    width: .8,
-                  ),
+                  borderSide: BorderSide(color: textColor, width: 0.8),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
-                  borderSide: BorderSide(
-                    color: AppColors.darkBlueColor,
-                    width: 0.8,
-                  ),
+                  borderSide: BorderSide(color: textColor, width: 0.8),
                 ),
-                suffixIcon: const Icon(
-                  Icons.edit,
-                  color: AppColors.darkBlueColor,
-                ),
+                suffixIcon: Icon(Icons.edit, color: textColor),
               ),
             ),
           ),
